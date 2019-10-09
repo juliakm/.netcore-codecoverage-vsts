@@ -10,8 +10,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: dotnet build
-  displayName: 'build'
+# - script: dotnet build
+#   displayName: 'build'
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    packageType: 'sdk' # other option is 'runtime', use for multi-targeting
+    version: 3.0.x
 
 - script: dotnet test $(System.DefaultWorkingDirectory)/**/TestCodeCoverageProject.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
   displayName: 'test with coverage'
